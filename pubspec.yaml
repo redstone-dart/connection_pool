@@ -1,5 +1,5 @@
 name: connection_pool
-version: 0.1.0
+version: 0.1.0+1
 author: Luiz Mineo <luiz.mineo@gmail.com>
 description: A generic connection pool
 homepage: http://luizmineo.github.io/connection_pool
