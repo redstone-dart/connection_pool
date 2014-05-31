@@ -1,5 +1,5 @@
 
-##v0.1.0+1
+##v0.1.0+2
 - Fix pubspec.yaml
 - Fix example
 
