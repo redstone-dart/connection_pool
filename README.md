@@ -41,7 +41,7 @@ app.Interceptor(r'/.*')
 dbInterceptor(MongoDbPool pool) {
  
   //get a connection
-  db.getConnection().then((managedConnection) {
+  pool.getConnection().then((managedConnection) {
 
     //save the connection in the attributes map
     app.request.attributes["conn"] = managedConnection.conn;
