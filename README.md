@@ -1,6 +1,8 @@
 connection_pool
 ===============
 
+[![Build Status](https://drone.io/github.com/luizmineo/connection_pool/status.png)](https://drone.io/github.com/luizmineo/connection_pool/latest)
+
 A very simple generic connection pool.
 
 Example: How to build a MongoDB connection pool, and use it in a [Redstone.dart](http://luizmineo.github.io/redstone.dart) app
