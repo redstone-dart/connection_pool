@@ -1,0 +1,10 @@
+name: connection_pool
+version: 0.1.0
+author: Luiz Mineo <luiz.mineo@gmail.com>
+description: A generic connection pool
+homepage: http://luizmineo.github.io/connection_pool
+environment:
+  sdk: '>=1.4.0 <2.0.0'
+dependencies:
+dev_dependencies:
+  unittest: '>=0.10.0 <0.12.0'
