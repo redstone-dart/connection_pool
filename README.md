@@ -78,6 +78,6 @@ main() {
   app.addModule(new Module()
     ..bind(MongoDbPool, toValue: new MongoDbPool(mongoDbUri, poolSize)));
 
-  app.start(address: cfg["host"], port: cfg["port"]);
+  app.start();
 }
 ``` 
