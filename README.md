@@ -1,6 +1,7 @@
 # Connection Pool
 
-[![Build Status](https://drone.io/github.com/luizmineo/connection_pool/status.png)](https://drone.io/github.com/luizmineo/connection_pool/latest)
+[![Build Status](https://travis-ci.org/redstone-dart/connection_pool.svg?branch=master)](https://travis-ci.org/redstone-dart/connection_pool?branch=master)
+[![Pub version](https://img.shields.io/pub/v/connection_pool.svg)](https://pub.dartlang.org/packages/connection_pool)
 
 A very simple generic connection pool.
 
