@@ -10,7 +10,8 @@ abstract class _Strategy {
   
   void releaseConnection(_ConnDestroyer connDestroyer, ManagedConnection conn, 
                          bool markAsInvalid);
-  
+
+  Future closeConnections(_ConnDestroyer connDestroyer);
 }
 
 class _ShareableConnectionsStrategy implements _Strategy {
@@ -54,7 +55,16 @@ class _ShareableConnectionsStrategy implements _Strategy {
       connDestroyer(conn.conn);
     }
   }
-  
+
+  Future closeConnections(_ConnDestroyer connDestroyer) {
+    return Future.forEach(_pool, (futureConn) {
+      if (futureConn != null) {
+        futureConn.then((conn) {
+          releaseConnection(connDestroyer, conn, true);
+        });
+      }
+    });
+  }
 }
 
 class _ExclusiveConnectionsStrategy implements _Strategy {
@@ -117,6 +127,17 @@ class _ExclusiveConnectionsStrategy implements _Strategy {
       }
       connDestroyer(conn.conn);
     }
+  }
+
+  Future closeConnections(_ConnDestroyer connDestroyer) {
+    var pool = _pool.map((lockableConn) => lockableConn.conn);
+    return Future.forEach(pool, (futureConn) {
+      if (futureConn != null) {
+        futureConn.then((conn) {
+          releaseConnection(connDestroyer, conn, true);
+        });
+      }
+    });
   }
 }
 

@@ -1,15 +1,22 @@
-// Don’t commit the following files and directories created by pub, Dart Editor, and dart2js
-/packages/
-**/packages
-.project
-.buildlog
-*.precompiled.js
-*.js_
+# Files and directories created by pub
+.packages
+.pub/
+build/
+packages
+pubspec.lock
+
+# Files created by dart2js
+*.dart.js
+*.part.js
 *.js.deps
 *.js.map
+*.info.json
 
-// Include when developing application packages
-//pubspec.lock 
+# Directory created by dartdoc
+doc/api/
 
-// Avoid committing generated JavaScript files
-*.dart.js
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws

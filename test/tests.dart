@@ -1,7 +1,7 @@
 
 import 'dart:async';
 
-import 'package:unittest/unittest.dart';
+import 'package:test/test.dart';
 
 import 'package:connection_pool/connection_pool.dart';
 
@@ -55,6 +55,14 @@ main() {
       return pool.getConnection().then((conn) {
         expect(conn.conn.id, equals(size));
       });
+    }).then((_) {
+      return pool.closeConnections();
+    }).then((_) {
+      return Future.wait(fConns).then((List<ManagedConnection<Conn>> conns) {
+        conns.forEach((conn) {
+          expect(conn.conn.state, "closed");
+        });
+      });
     });
   });
   
@@ -107,6 +115,14 @@ main() {
       pool.releaseConnection(conns[0], markAsInvalid: true);
       return pool.getConnection().then((conn) {
         expect(conn.conn.id, equals(size));
+      });
+    }).then((_) {
+      return pool.closeConnections();
+    }).then((_) {
+      return Future.wait(fConns).then((List<ManagedConnection<Conn>> conns) {
+        conns.forEach((conn) {
+          expect(conn.conn.state, "closed");
+        });
       });
     });
   });

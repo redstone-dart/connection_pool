@@ -55,7 +55,13 @@ abstract class ConnectionPool<T> {
   void releaseConnection(ManagedConnection conn, {bool markAsInvalid: false}) {
     _strategy.releaseConnection(closeConnection, conn, markAsInvalid);
   }
-  
+
+  /**
+   * Close all opened connections from the pool
+   */
+  Future closeConnections() {
+    return _strategy.closeConnections(closeConnection);
+  }
 }
 
 class ManagedConnection<T> {
