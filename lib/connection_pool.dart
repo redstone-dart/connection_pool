@@ -12,17 +12,16 @@ part 'package:connection_pool/src/strategies.dart';
  * and provide the [openNewConnection] and [closeConnection] methods.
  */
 abstract class ConnectionPool<T> {
-  
   _Strategy _strategy;
-  
+
   /**
    * Create a new connection pool.
-   * 
+   *
    * [poolSize] is the number of connections that will be managed by
-   * this pool. If [shareableConnections] is true (the default value), 
+   * this pool. If [shareableConnections] is true (the default value),
    * then the pool will assume that the connections can handle concurrent
-   * requests.  
-   */ 
+   * requests.
+   */
   ConnectionPool(int poolSize, {bool shareableConnections: true}) {
     if (shareableConnections) {
       _strategy = new _ShareableConnectionsStrategy(poolSize);
@@ -30,50 +29,49 @@ abstract class ConnectionPool<T> {
       _strategy = new _ExclusiveConnectionsStrategy(poolSize);
     }
   }
-  
+
   /**
    * Create and open a new connection
-   */ 
+   */
   Future<T> openNewConnection();
-  
+
   /**
-   * Close a connection 
+   * Close a connection
    */
   void closeConnection(T conn);
-  
+
   /**
-   * Retrieve a connection from the pool 
+   * Retrieve a connection from the pool
    */
   Future<ManagedConnection<T>> getConnection() {
-    return _strategy.getConnection(()
-      => openNewConnection().then((conn) => _wrapConn(conn)));
+    return _strategy.getConnection(
+        () => openNewConnection().then((conn) => _wrapConn(conn)));
   }
-  
+
   /**
-   * Return a connection to the pool 
+   * Return a connection to the pool
    */
-  void releaseConnection(ManagedConnection conn, {bool markAsInvalid: false}) {
-    _strategy.releaseConnection(closeConnection, conn, markAsInvalid);
-  }
-  
+  void releaseConnection(ManagedConnection conn, {bool markAsInvalid: false}) =>
+      _strategy.releaseConnection(closeConnection, conn, markAsInvalid);
+
+  /**
+   * Close all opened connections from the pool
+   */
+  Future closeConnections() => _strategy.closeConnections(closeConnection);
 }
 
 class ManagedConnection<T> {
-  
   final int connId;
   final T conn;
-  
+
   ManagedConnection(this.connId, this.conn);
-  
 }
 
 class ConnectionPoolException implements Exception {
-  
   String message;
   dynamic cause;
-  
+
   ConnectionPoolException([this.message = "", this.cause]);
-  
+
   String toString() => "ConnectionPoolException: $message Cause: $cause";
-  
 }
