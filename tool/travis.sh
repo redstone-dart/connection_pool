@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -e
-dart test/tests.dart
+dart test/all_test.dart
